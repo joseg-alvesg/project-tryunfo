@@ -19,6 +19,7 @@ class Form extends React.Component {
     return (
       <form>
         <input
+          id="domid"
           type="text"
           data-testid="name-input"
           value={ cardName }
