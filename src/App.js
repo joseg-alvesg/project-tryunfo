@@ -2,20 +2,25 @@ import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
 
+const initialState = {
+  cardName: '',
+  cardDescription: '',
+  cardAttr1: '0',
+  cardAttr2: '0',
+  cardAttr3: '0',
+  cardImage: '',
+  cardRare: '',
+};
+
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      cardName: '',
-      cardDescription: '',
-      cardAttr1: '',
-      cardAttr2: '',
-      cardAttr3: '',
-      cardImage: '',
-      cardRare: '',
+      ...initialState,
       cardTrunfo: false,
       isSaveButtonDisabled: true,
+      cardSaver: [],
     };
   }
 
@@ -24,6 +29,16 @@ class App extends React.Component {
     this.setState({
       [name]: type === 'checkbox' ? checked : value,
     }, this.disableBtn);
+  };
+
+  onSaveButtonClick = () => {
+    const { ...state } = this.state;
+    const newInfos = { ...state };
+
+    this.setState(({ cardSaver }) => ({
+      cardSaver: [...cardSaver, newInfos],
+      ...initialState,
+    }));
   };
 
   disableBtn = () => {
@@ -66,6 +81,7 @@ class App extends React.Component {
         <Form
           { ...this.state }
           onInputChange={ this.onInputChange }
+          onSaveButtonClick={ this.onSaveButtonClick }
         />
         <Card
           { ...this.state }
