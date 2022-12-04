@@ -19,6 +19,7 @@ class App extends React.Component {
     this.state = {
       ...initialState,
       cardTrunfo: false,
+      hasTrunfo: false,
       isSaveButtonDisabled: true,
       cardSaver: [],
     };
@@ -32,12 +33,16 @@ class App extends React.Component {
   };
 
   onSaveButtonClick = () => {
-    const { ...state } = this.state;
-    const newInfos = { ...state };
+    const { cardTrunfo } = this.state;
+    const { ...state } = this.state; // captura os elementos do state
+    if (cardTrunfo) {
+      this.setState({ hasTrunfo: true});
+    }
+    const newInfos = { ...state }; // clona o state inicial com as informações novas
 
-    this.setState(({ cardSaver }) => ({
-      cardSaver: [...cardSaver, newInfos],
-      ...initialState,
+    this.setState(({ cardSaver }) => ({ // {cardSaver} pega a chave como callback
+      cardSaver: [...cardSaver, newInfos], // salva no cardSaver os valores antigos com os novos valores
+      ...initialState, // utiliza as informações do estado inicial para "zerar" os estados ao recarregar
     }));
   };
 
