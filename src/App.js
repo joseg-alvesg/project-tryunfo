@@ -80,6 +80,7 @@ class App extends React.Component {
   };
 
   render() {
+    const { cardSaver } = this.state;
     return (
       <div>
         <h1>Tryunfo project start</h1>
@@ -92,6 +93,10 @@ class App extends React.Component {
           { ...this.state }
           onInputChange={ this.onInputChange }
         />
+        <div>
+          {cardSaver.map((elem) => (
+            <section key={ elem.cardName }><Card { ...elem } /></section>))}
+        </div>
       </div>
     );
   }
