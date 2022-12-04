@@ -14,8 +14,8 @@ class Card extends React.Component {
       cardTrunfo,
     } = this.props;
 
-    const trunfoCheck = () => (cardTrunfo
-      ? <span data-testid="trunfo-card">Super Trunfo</span> : null);
+    // const trunfoCheck = () => (cardTrunfo
+    //   ? <span data-testid="trunfo-card">Super Trunfo</span> : null);
 
     return (
       <div>
@@ -28,7 +28,7 @@ class Card extends React.Component {
           <li data-testid="attr3-card">{cardAttr3}</li>
         </ul>
         <h3 data-testid="rare-card">{cardRare}</h3>
-        {trunfoCheck()}
+        {cardTrunfo && <span data-testid="trunfo-card">Super Trunfo</span>}
       </div>
     );
   }

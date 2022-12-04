@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 
 class Form extends React.Component {
   render() {
@@ -21,12 +21,14 @@ class Form extends React.Component {
         <input
           id="domid"
           type="text"
+          name="cardName"
           data-testid="name-input"
           value={ cardName }
           onChange={ onInputChange }
         />
 
         <textarea
+          name="cardDescription"
           cols="30"
           rows="10"
           data-testid="description-input"
@@ -36,6 +38,7 @@ class Form extends React.Component {
 
         <input
           type="number"
+          name="cardAttr1"
           data-testid="attr1-input"
           value={ cardAttr1 }
           onChange={ onInputChange }
@@ -43,12 +46,14 @@ class Form extends React.Component {
 
         <input
           type="number"
+          name="cardAttr2"
           data-testid="attr2-input"
           value={ cardAttr2 }
           onChange={ onInputChange }
         />
 
         <input
+          name="cardAttr3"
           type="number"
           data-testid="attr3-input"
           value={ cardAttr3 }
@@ -56,13 +61,19 @@ class Form extends React.Component {
         />
 
         <input
+          name="cardImage"
           type="text"
           data-testid="image-input"
           value={ cardImage }
           onChange={ onInputChange }
         />
 
-        <select value={ cardRare } data-testid="rare-input" onChange={ onInputChange }>
+        <select
+          name="cardRare"
+          value={ cardRare }
+          data-testid="rare-input"
+          onChange={ onInputChange }
+        >
           <option value="normal">normal</option>
           <option value="raro">raro</option>
           <option value="muito raro">muito raro</option>
@@ -70,6 +81,7 @@ class Form extends React.Component {
 
         <input
           type="checkbox"
+          name="cardTrunfo"
           data-testid="trunfo-input"
           checked={ cardTrunfo }
           onChange={ onInputChange }
@@ -88,20 +100,6 @@ class Form extends React.Component {
     );
   }
 }
-Form.defaultProps = {
-  cardName: '',
-  cardDescription: '',
-  cardAttr1: '',
-  cardAttr2: '',
-  cardAttr3: '',
-  cardImage: '',
-  cardRare: '',
-  cardTrunfo: false,
-  hasTrunfo: false,
-  isSaveButtonDisabled: true,
-  onInputChange: null,
-  onSaveButtonClick: null,
-};
 
 Form.propTypes = {
   cardName: PropTypes.string,
