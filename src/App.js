@@ -36,7 +36,7 @@ class App extends React.Component {
     const { cardTrunfo } = this.state;
     const { ...state } = this.state; // captura os elementos do state
     if (cardTrunfo) {
-      this.setState({ hasTrunfo: true});
+      this.setState({ hasTrunfo: true });
     }
     const newInfos = { ...state }; // clona o state inicial com as informações novas
 
