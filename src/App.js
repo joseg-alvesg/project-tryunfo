@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
+import RemoveBtn from './components/RemoveBtn';
 
 const initialState = {
   cardName: '',
@@ -36,7 +37,7 @@ class App extends React.Component {
     const { cardTrunfo } = this.state;
     const { ...state } = this.state; // captura os elementos do state
     if (cardTrunfo) {
-      this.setState({ hasTrunfo: true });
+      this.setState({ hasTrunfo: true, cardTrunfo: false });
     }
     const newInfos = { ...state }; // clona o state inicial com as informações novas
 
@@ -44,6 +45,18 @@ class App extends React.Component {
       cardSaver: [...cardSaver, newInfos], // salva no cardSaver os valores antigos com os novos valores
       ...initialState, // utiliza as informações do estado inicial para "zerar" os estados ao recarregar
     }));
+  };
+
+  cardRemove = (name, trunfoCard) => {
+    const { cardSaver } = this.state;
+
+    if (trunfoCard === true) {
+      const newSave = cardSaver.filter((eachCard) => eachCard.cardTrunfo !== trunfoCard);
+      this.setState({ cardSaver: [...newSave], hasTrunfo: false, cardTrunfo: false });
+    } else {
+      const newSave = cardSaver.filter((eachCard) => eachCard.cardName !== name);
+      this.setState({ cardSaver: [...newSave] });
+    }
   };
 
   disableBtn = () => {
@@ -95,7 +108,16 @@ class App extends React.Component {
         />
         <div>
           {cardSaver.map((elem) => (
-            <section key={ elem.cardName }><Card { ...elem } /></section>))}
+            <section key={ elem.cardName }>
+              <Card { ...elem } />
+              <RemoveBtn
+                type="button"
+                cardRemove={ this.cardRemove }
+                cardTrunfo={ elem.cardTrunfo }
+                cardName={ elem.cardName }
+              />
+            </section>
+          ))}
         </div>
       </div>
     );
