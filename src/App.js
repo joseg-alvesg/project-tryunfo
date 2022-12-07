@@ -2,6 +2,7 @@ import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
 import RemoveBtn from './components/RemoveBtn';
+import SearchFilter from './components/SearchFilter';
 
 const initialState = {
   cardName: '',
@@ -11,6 +12,7 @@ const initialState = {
   cardAttr3: '0',
   cardImage: '',
   cardRare: '',
+  searchFill: '',
 };
 
 class App extends React.Component {
@@ -26,8 +28,8 @@ class App extends React.Component {
     };
   }
 
-  onInputChange = (event) => {
-    const { name, value, type, checked } = event.target;
+  onInputChange = ({ target }) => {
+    const { name, value, type, checked } = target;
     this.setState({
       [name]: type === 'checkbox' ? checked : value,
     }, this.disableBtn);
@@ -93,7 +95,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { cardSaver } = this.state;
+    const { cardSaver, searchFill } = this.state;
     return (
       <div>
         <h1>Tryunfo project start</h1>
@@ -107,17 +109,29 @@ class App extends React.Component {
           onInputChange={ this.onInputChange }
         />
         <div>
-          {cardSaver.map((elem) => (
-            <section key={ elem.cardName }>
-              <Card { ...elem } />
-              <RemoveBtn
-                type="button"
-                cardRemove={ this.cardRemove }
-                cardTrunfo={ elem.cardTrunfo }
-                cardName={ elem.cardName }
-              />
-            </section>
-          ))}
+          <SearchFilter
+            searchFill={ searchFill }
+            onInputChange={ this.onInputChange }
+          />
+
+        </div>
+        {/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
+        <div>
+
+          {cardSaver
+            .filter((nome) => nome.cardName.toLowerCase()
+              .includes(searchFill.toLowerCase()))
+            .map((elem) => (
+              <section key={ elem.cardName }>
+                <Card { ...elem } />
+                <RemoveBtn
+                  type="button"
+                  cardRemove={ this.cardRemove }
+                  cardTrunfo={ elem.cardTrunfo }
+                  cardName={ elem.cardName }
+                />
+              </section>
+            ))}
         </div>
       </div>
     );
