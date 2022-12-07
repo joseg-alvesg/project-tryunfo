@@ -13,6 +13,7 @@ const initialState = {
   cardImage: '',
   cardRare: '',
   searchFill: '',
+  searchRarity: '',
 };
 
 class App extends React.Component {
@@ -95,7 +96,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { cardSaver, searchFill } = this.state;
+    const { cardSaver, searchFill, searchRarity } = this.state;
     return (
       <div>
         <h1>Tryunfo project start</h1>
@@ -111,14 +112,16 @@ class App extends React.Component {
         <div>
           <SearchFilter
             searchFill={ searchFill }
+            searchRarity={ searchRarity }
             onInputChange={ this.onInputChange }
           />
-
         </div>
         {/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
         <div>
 
           {cardSaver
+            .filter((raridade) => (searchRarity === 'todas' ? raridade
+              .cardName : raridade.cardRare === searchRarity))
             .filter((nome) => nome.cardName.toLowerCase()
               .includes(searchFill.toLowerCase()))
             .map((elem) => (
