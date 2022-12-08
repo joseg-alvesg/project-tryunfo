@@ -13,7 +13,8 @@ const initialState = {
   cardImage: '',
   cardRare: '',
   searchFill: '',
-  searchRarity: '',
+  searchRarity: 'todas',
+  boxCheck: false,
 };
 
 class App extends React.Component {
@@ -26,6 +27,7 @@ class App extends React.Component {
       hasTrunfo: false,
       isSaveButtonDisabled: true,
       cardSaver: [],
+      disableFill: false,
     };
   }
 
@@ -71,6 +73,7 @@ class App extends React.Component {
       cardAttr3,
       cardImage,
       cardRare,
+      boxCheck,
     } = this.state;
 
     const maxNumber = 90;
@@ -93,10 +96,13 @@ class App extends React.Component {
     } else {
       this.setState({ isSaveButtonDisabled: true });
     }
+
+    this.setState({ disableFill: boxCheck });
   };
 
   render() {
-    const { cardSaver, searchFill, searchRarity } = this.state;
+    const { cardSaver, searchFill, searchRarity,
+      boxCheck, disableFill } = this.state;
     return (
       <div>
         <h1>Tryunfo project start</h1>
@@ -113,17 +119,19 @@ class App extends React.Component {
           <SearchFilter
             searchFill={ searchFill }
             searchRarity={ searchRarity }
+            boxCheck={ boxCheck }
+            disableFill={ disableFill }
             onInputChange={ this.onInputChange }
           />
         </div>
         {/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
         <div>
 
-          {cardSaver
-            .filter((raridade) => (searchRarity === 'todas' ? raridade
-              .cardName : raridade.cardRare === searchRarity))
+          {cardSaver.filter((raridade) => (searchRarity === 'todas' ? cardSaver
+            : raridade.cardRare === searchRarity))
             .filter((nome) => nome.cardName.toLowerCase()
               .includes(searchFill.toLowerCase()))
+            .filter((cardTrue) => (boxCheck ? cardTrue.cardTrunfo : cardTrue))
             .map((elem) => (
               <section key={ elem.cardName }>
                 <Card { ...elem } />
