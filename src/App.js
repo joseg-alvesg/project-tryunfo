@@ -41,9 +41,11 @@ class App extends React.Component {
   onSaveButtonClick = () => {
     const { cardTrunfo } = this.state;
     const { ...state } = this.state; // captura os elementos do state
+
     if (cardTrunfo) {
       this.setState({ hasTrunfo: true, cardTrunfo: false });
     }
+
     const newInfos = { ...state }; // clona o state inicial com as informações novas
 
     this.setState(({ cardSaver }) => ({ // {cardSaver} pega a chave como callback
